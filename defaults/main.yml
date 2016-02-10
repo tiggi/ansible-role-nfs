@@ -1,2 +1,6 @@
 ---
 nfs_exports: []
+nfs_server_state: "started"
+nfs_server_enabled: "yes"
+# If nfs_service_managed is False then we don't restart/start nfs
+nfs_service_managed: True

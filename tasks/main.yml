@@ -10,7 +10,7 @@
 - include: setup-Debian.yml
   when: ansible_os_family == 'Debian'
 
-- name: Copy exports file.
+- name: Template exports file.
   template:
     src: exports.j2
     dest: /etc/exports
@@ -20,5 +20,5 @@
   notify: restart nfs
 
 - name: Ensure nfs is running.
-  service: name={{ nfs_server_daemon }} state=started enabled=yes
-  when: nfs_exports|length
+  service: name={{ nfs_server_daemon }} state={{ nfs_server_state }} enabled={{ nfs_server_enabled }}
+  when: nfs_exports|length and nfs_service_managed
