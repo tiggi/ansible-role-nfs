@@ -22,3 +22,13 @@
 - name: Ensure nfs is running.
   service: name={{ nfs_server_daemon }} state={{ nfs_server_state }} enabled={{ nfs_server_enabled }}
   when: nfs_exports|length and nfs_service_managed
+
+- sysctl:
+    name: fs.nfsd.threads
+    value: {{ nfsd_threads }}
+    sysctl_file: /etc/sysctl.d/50-nfsd-threads.conf
+    reload: yes
+    sysctl_set: yes
+    state: present
+  
+
