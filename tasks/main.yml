@@ -25,7 +25,7 @@
 
 - sysctl:
     name: fs.nfsd.threads
-    value: {{ nfsd_threads }}
+    value: "{{ nfsd_threads }}"
     sysctl_file: /etc/sysctl.d/50-nfsd-threads.conf
     reload: yes
     sysctl_set: yes
