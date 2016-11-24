@@ -30,5 +30,6 @@
     reload: yes
     sysctl_set: yes
     state: present
+    when: nfs_exports|length and nfs_service_managed
   
 
