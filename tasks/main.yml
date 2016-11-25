@@ -32,3 +32,7 @@
       dest: '/etc/sysconfig/nfs'
   when: nfs_exports|length and nfs_service_managed
 
+- name: Set threadcount in runtime system
+  shell: /usr/bin/echo {{ nfsd_threads }} > /proc/fs/nfsd/threads 
+  when: nfs_exports|length and nfs_service_managed
+      
