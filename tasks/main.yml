@@ -31,8 +31,11 @@
       state: present
       insertafter: "^#RPCNFSDCOUNT=16"
       create: no
+      regexp: '^RPCNFSDCOUNT=".*"'
       line: 'RPCNFSDCOUNT="{{ nfsd_threads }}"'
       dest: '/etc/sysconfig/nfs'
       backup: yes
   when: nfs_exports|length and nfs_service_managed
-  notify: restart nfs-config on EL7
+  notify: 
+    - restart nfs-config on EL7
+    - restart nfs-server
