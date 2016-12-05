@@ -35,7 +35,7 @@
       line: 'RPCNFSDCOUNT="{{ nfsd_threads }}"'
       dest: '/etc/sysconfig/nfs'
       backup: yes
-  when: nfs_exports|length and nfs_service_managed
+  when: nfs_exports|length and nfs_service_managed and ansible_os_family == "RedHat"
   notify: 
     - restart nfs-config on EL7
     - restart nfs-server
