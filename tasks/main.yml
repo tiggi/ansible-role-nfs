@@ -17,23 +17,25 @@
     owner: root
     group: root
     mode: 0644
-  notify: restart nfs
+  notify: restart nfs-server
 
 - name: Ensure nfs is running.
-  service: name={{ nfs_server_daemon }} state={{ nfs_server_state }} enabled={{ nfs_server_enabled }}
+  service: 
+      name: "{{ nfs_server_daemon }}"
+      state: "{{ nfs_server_state }}"
+      enabled: "{{ nfs_server_enabled }}"
   when: nfs_exports|length and nfs_service_managed
 
-- name: Set threadcount for nfsd in sysconfig file
+- name: Set threadcount for nfsd in sysconfig file.
   lineinfile:
       state: present
       insertafter: "^#RPCNFSDCOUNT=16"
       create: no
+      regexp: '^RPCNFSDCOUNT=".*"'
       line: 'RPCNFSDCOUNT="{{ nfsd_threads }}"'
       dest: '/etc/sysconfig/nfs'
-  when: nfs_exports|length and nfs_service_managed
-  notify: restart nfs
-
-- name: Set threadcount in runtime system
-  shell: /usr/bin/echo {{ nfsd_threads }} > /proc/fs/nfsd/threads 
-  when: nfs_exports|length and nfs_service_managed
-
+      backup: yes
+  when: nfs_exports|length and nfs_service_managed and ansible_os_family == "RedHat"
+  notify: 
+    - restart nfs-config on EL7
+    - restart nfs-server

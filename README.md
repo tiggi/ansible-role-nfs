@@ -1,8 +1,6 @@
 [![Build Status](https://travis-ci.org/CSC-IT-Center-for-Science/ansible-role-nfs.svg)](https://travis-ci.org/CSC-IT-Center-for-Science/ansible-role-nfs)
 # Ansible Role: NFS
 
-[![Build Status](https://travis-ci.org/geerlingguy/ansible-role-nfs.svg?branch=master)](https://travis-ci.org/geerlingguy/ansible-role-nfs)
-
 Installs NFS utilities on RedHat/CentOS or Debian/Ubuntu.
 
 ## Requirements
@@ -25,7 +23,7 @@ None.
 
     - hosts: db-servers
       roles:
-        - { role: geerlingguy.nfs }
+        - { role: ansible-role-nfs }
 
 ## License
 
